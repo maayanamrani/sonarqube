@@ -67,7 +67,8 @@ public class LiveQualityGateComputerImpl implements LiveQualityGateComputer {
       return ShortLivingBranchQualityGate.GATE;
     }
 
-    QualityGateDto gateDto = qGateFinder.getQualityGate(dbSession, organization, project).getQualityGate();
+    ComponentDto mainProject = project.getMainBranchProjectUuid() == null ? project : dbClient.componentDao().selectOrFailByKey(dbSession, project.getKey());
+    QualityGateDto gateDto = qGateFinder.getQualityGate(dbSession, organization, mainProject).getQualityGate();
     Collection<QualityGateConditionDto> conditionDtos = dbClient.gateConditionDao().selectForQualityGate(dbSession, gateDto.getId());
     Set<Integer> metricIds = conditionDtos.stream().map(c -> (int) c.getMetricId())
       .collect(toHashSet(conditionDtos.size()));
