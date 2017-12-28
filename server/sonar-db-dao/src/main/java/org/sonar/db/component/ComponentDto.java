@@ -237,6 +237,9 @@ public class ComponentDto {
    */
   @CheckForNull
   public String getBranch() {
+    if (kee == null) {
+      return null;
+    }
     List<String> split = BRANCH_KEY_SPLITTER.splitToList(kee);
     return split.size() == 2 ? split.get(1) : null;
   }

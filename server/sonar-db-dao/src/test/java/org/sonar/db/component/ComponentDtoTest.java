@@ -112,5 +112,8 @@ public class ComponentDtoTest {
     underTest = new ComponentDto().setDbKey("my_key");
     assertThat(underTest.getKey()).isEqualTo("my_key");
     assertThat(underTest.getBranch()).isNull();
+
+    underTest = new ComponentDto();
+    assertThat(underTest.getBranch()).isNull();
   }
 }
